@@ -19,7 +19,7 @@ def legal_coord(x, board_size):
     """Check if the coordinates are within the board."""
     return 0 <= x < board_size
 
-def knight_tour_random(threshold, board_size=8, trials=100):
+def knight_tour_random(threshold, trials, board_size=8):
     """Run the knight's tour with a random approach."""
     results = []
     threshold_squares = (threshold * board_size ** 2) / 100  # Calculate the threshold in terms of squares
@@ -68,10 +68,12 @@ def write_results_to_file(results, p, board_size=8):
             f.write("\n---\n")
             
             
-def run_knight_tour_simulation(p, board_size=8, trials=100000):
+def run_knight_tour_simulation(p, trials ,board_size=8 ):
+    
+    
     """Run the knight's tour simulation and print the summary of results."""
     successful_tours = 0
-    results = knight_tour_random(p, board_size, trials)
+    results = knight_tour_random(p,trials, board_size )
     
     # Count the number of successful tours
     for result in results:
@@ -87,6 +89,10 @@ def run_knight_tour_simulation(p, board_size=8, trials=100000):
     print(f"Number of trials: {trials}")
     print(f"Probability of a successful tour: {probability_of_success:.5f} \n")
 
+    # Call the function to write the results to a file
+    write_results_to_file(results, p, board_size)
+
 # Run the simulation for different values of p and print the results
 for p_value in [0.7, 0.8, 0.85]:
-    run_knight_tour_simulation(p_value, trials=100)  # Use 100000 for the actual project run
+    trial_change=10
+    run_knight_tour_simulation(p_value, trial_change)  # Use 100000 for the actual project run
