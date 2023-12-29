@@ -1,17 +1,15 @@
 import random
 import os
 
-def generate_legal_moves(x, y, board_size):
+def generate_legal_moves(x, y, board):
     """Generate all possible moves for a knight on an 8x8 chessboard."""
     new_moves = []
     move_offsets = [(-2, -1), (-1, -2), (-2, 1), (-1, 2),
                     (1, -2), (2, -1), (1, 2), (2, 1)]
     
     for move in move_offsets:
-        new_x = x + move[0]
-        new_y = y + move[1]
-        if legal_coord(new_x, board_size) and \
-           legal_coord(new_y, board_size):
+        new_x, new_y = x + move[0], y + move[1]
+        if legal_coord(new_x, len(board)) and legal_coord(new_y, len(board)) and board[new_x][new_y] == -1:
             new_moves.append((new_x, new_y))
     return new_moves
 
@@ -22,35 +20,33 @@ def legal_coord(x, board_size):
 def knight_tour_random(threshold, trials, board_size=8):
     """Run the knight's tour with a random approach."""
     results = []
-    threshold_squares = (threshold * board_size ** 2) / 100  # Calculate the threshold in terms of squares
+    threshold_squares = int((threshold * board_size ** 2) / 100)  # Calculate the threshold in terms of squares
     
     for trial in range(trials):
         board = [[-1 for _ in range(board_size)] for _ in range(board_size)]
         move_sequence = []
         current_pos = (random.randrange(board_size), random.randrange(board_size))
-        move_sequence.append(current_pos)  # record the start position
         board[current_pos[0]][current_pos[1]] = 0  # mark the start position as visited
-
-        for move_number in range(1, board_size ** 2):
-            legal_moves = generate_legal_moves(current_pos[0], current_pos[1], board_size)
-            if not legal_moves:
-                break  # no more legal moves, end the tour
-            current_pos = random.choice(legal_moves)
-            move_sequence.append(current_pos)  # record each move
-            board[current_pos[0]][current_pos[1]] = move_number  # mark the square as visited
+        move_sequence.append(current_pos)  # record the start position
         
-        success = len(move_sequence) > threshold_squares  # Check if the tour was successful
+        while True:
+            legal_moves = generate_legal_moves(current_pos[0], current_pos[1], board)
+            if not legal_moves:
+                # No more legal moves, end the tour
+                break
+            current_pos = random.choice(legal_moves)
+            board[current_pos[0]][current_pos[1]] = len(move_sequence)  # mark the square as visited
+            move_sequence.append(current_pos)  # record each move
+        
+        success = len(move_sequence) - 1 >= threshold_squares  # Check if the tour was successful
         results.append({
             'start': move_sequence[0],
             'move_sequence': move_sequence,
             'success': success,
-            'tour_length': len(move_sequence),  # the actual tour length is the length of move_sequence
+            'tour_length': len(move_sequence),
             'board': board
         })
     return results
-
-
-
 
 def write_results_to_file(results, p, board_size=8):
     """Write the results of the knight's tour to a file."""
@@ -66,14 +62,11 @@ def write_results_to_file(results, p, board_size=8):
                 f.write(' '.join(str(cell) for cell in row) + '\n')
             
             f.write("\n---\n")
-            
-            
-def run_knight_tour_simulation(p, trials ,board_size=8 ):
-    
-    
+
+def run_knight_tour_simulation(p, trials, board_size=8):
     """Run the knight's tour simulation and print the summary of results."""
     successful_tours = 0
-    results = knight_tour_random(p,trials, board_size )
+    results = knight_tour_random(p, trials, board_size)
     
     # Count the number of successful tours
     for result in results:
@@ -87,12 +80,12 @@ def run_knight_tour_simulation(p, trials ,board_size=8 ):
     print(f"LasVegas Algorithm With p = {p}")
     print(f"Number of successful tours: {successful_tours}")
     print(f"Number of trials: {trials}")
-    print(f"Probability of a successful tour: {probability_of_success:.5f} \n")
+    print(f"Probability of a successful tour: {probability_of_success:.5f}\n")
 
     # Call the function to write the results to a file
     write_results_to_file(results, p, board_size)
 
 # Run the simulation for different values of p and print the results
 for p_value in [0.7, 0.8, 0.85]:
-    trial_change=10
-    run_knight_tour_simulation(p_value, trial_change)  # Use 100000 for the actual project run
+    trial_count = 10  # Use 100000 for the actual project run
+    run_knight_tour_simulation(p_value, trial_count)
