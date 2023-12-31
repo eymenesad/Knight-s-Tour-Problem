@@ -20,7 +20,7 @@ def legal_coord(x, board_size):
 def knight_tour_random(threshold, trials, board_size=8):
     """Run the knight's tour with a random approach."""
     results = []
-    threshold_squares = int((threshold * board_size ** 2) / 100)  # Calculate the threshold in terms of squares
+    threshold_squares = int(threshold * board_size ** 2)  # Calculate the threshold in terms of squares
     
     for trial in range(trials):
         board = [[-1 for _ in range(board_size)] for _ in range(board_size)]
@@ -89,3 +89,4 @@ def run_knight_tour_simulation(p, trials, board_size=8):
 for p_value in [0.7, 0.8, 0.85]:
     trial_count = 10  # Use 100000 for the actual project run
     run_knight_tour_simulation(p_value, trial_count)
+    break
