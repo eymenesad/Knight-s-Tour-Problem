@@ -1,5 +1,7 @@
 import random
 import os
+import time
+
 
 def generate_legal_moves(x, y, board):
     """Generate all possible moves for a knight on an 8x8 chessboard."""
@@ -142,6 +144,7 @@ def backtracking_tour(board, move_sequence, threshold_squares):
 def run_knight_tour_simulation_det(p, k_values, trials, board_size=8):
     """Run the knight's tour simulation for different values of k and print the summary of results."""
     for k in k_values:
+        start_time = time.time()
         successful_tours = 0
         results = knight_tour_deterministic(p, k, trials, board_size)
         
@@ -158,7 +161,8 @@ def run_knight_tour_simulation_det(p, k_values, trials, board_size=8):
         print(f"Number of successful tours: {successful_tours}")
         print(f"Number of trials: {trials}")
         print(f"Probability of a successful tour: {probability_of_success:.5f}\n")
-
+        elapsed_time = time.time() - start_time
+        print(f"Time elapsed: {elapsed_time:.2f} seconds\n")
     #write_results_to_file(results, p, board_size)
 
 # Run the simulation for different values of p and print the results
@@ -167,7 +171,10 @@ input_type = input("Enter part1 for Las Vegas Algorithm or part2 for Las Vegas A
 if input_type == "part1":
     for p_value in [0.7, 0.8, 0.85]:
         trial_count = 100000  # Use 100000 for the actual project run
+        start_time = time.time()
         run_knight_tour_simulation(p_value, trial_count)
+        elapsed_time = time.time() - start_time
+        print(f"Time elapsed: {elapsed_time:.2f} seconds\n")
         
 
 elif input_type == "part2":
