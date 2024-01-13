@@ -166,7 +166,7 @@ def run_knight_tour_simulation_det(p, k_values, trials, board_size=8):
     #write_results_to_file(results, p, board_size)
 
 # Run the simulation for different values of p and print the results
-input_type = input("Enter part1 for Las Vegas Algorithm or part2 for Las Vegas Algorithm with Deterministic Algorithm: ")
+input_type = input()
 
 if input_type == "part1":
     for p_value in [0.7, 0.8, 0.85]:
