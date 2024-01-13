@@ -38,7 +38,7 @@ def knight_tour_random(threshold, trials, board_size=8):
             board[current_pos[0]][current_pos[1]] = len(move_sequence)  # mark the square as visited
             move_sequence.append(current_pos)  # record each move
         
-        success = len(move_sequence) - 1 >= threshold_squares  # Check if the tour was successful
+        success = len(move_sequence) >= threshold_squares  # Check if the tour was successful
         results.append({
             'start': move_sequence[0],
             'move_sequence': move_sequence,
@@ -122,7 +122,7 @@ def knight_tour_deterministic(p, k, trials, board_size=8):
 
 def backtracking_tour(board, move_sequence, threshold_squares):
     """Use backtracking to complete the knight's tour."""
-    if len(move_sequence) - 1 >= threshold_squares:
+    if len(move_sequence) >= threshold_squares:
         return True  # The tour is already successful
 
     current_pos = move_sequence[-1]
@@ -159,22 +159,22 @@ def run_knight_tour_simulation_det(p, k_values, trials, board_size=8):
         print(f"Number of trials: {trials}")
         print(f"Probability of a successful tour: {probability_of_success:.5f}\n")
 
-    write_results_to_file(results, p, board_size)
+    #write_results_to_file(results, p, board_size)
 
 # Run the simulation for different values of p and print the results
 input_type = input("Enter part1 for Las Vegas Algorithm or part2 for Las Vegas Algorithm with Deterministic Algorithm: ")
 
 if input_type == "part1":
     for p_value in [0.7, 0.8, 0.85]:
-        trial_count = 10  # Use 100000 for the actual project run
+        trial_count = 100000  # Use 100000 for the actual project run
         run_knight_tour_simulation(p_value, trial_count)
-        break
+        
 
 elif input_type == "part2":
         # Run the simulation for different values of p, k, and print the results
     p_values = [0.7, 0.8, 0.85]
     k_values = [0, 1, 2, 3]
-    trial_count = 10000
+    trial_count = 100000
 
-    #for p_value in p_values:
-    #run_knight_tour_simulation_det(0.85, k_values, trial_count)
+    for p_value in p_values:
+        run_knight_tour_simulation_det(p_value, k_values, trial_count)
