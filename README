@@ -15,7 +15,9 @@ To run the program, follow these steps:
     python3 main.py
     ```
 After these write part1 or part2
-
+    ```bash
+    part1
+    ```
 ## Requirements
 
 - Python 3.x
