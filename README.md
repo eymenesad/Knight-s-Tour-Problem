@@ -1,6 +1,6 @@
 # Knight's Tour Problem
 
-This repository contains a Python implementation of the Knight's Tour Problem. The Knight's Tour is a mathematical problem in which a knight is placed on a chessboard and must visit each square exactly once, following the movement rules of a knight in chess.
+This repository contains a Python implementation of the Knight's Tour Problem. The Knight's Tour is a mathematical problem in which a knight is placed on a chessboard and must visit each square exactly once, following the movement rules of a knight in chess. The program employs a probabilistic  (Las Vegas) to solve the Knight’s Tour problem on a chessboard.
 
 ## Getting Started
 
